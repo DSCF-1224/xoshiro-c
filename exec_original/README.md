@@ -13,7 +13,7 @@
   - (local)&nbsp;[run_all.sh](run_all.sh)
     - run all programs to execute the original generators.
 - `include`
-  - (local)&nbsp;[fprintf_sample_64bit.c](fprintf_sample_64bit.c)
+  - (local)&nbsp;[fprintf_sample_64bit.c](include/fprintf_sample_64bit.c)
   - (link)&nbsp;[xoroshiro1024plusplus.c](https://prng.di.unimi.it/xoroshiro1024plusplus.c)
   - (link)&nbsp;[xoroshiro1024star.c](https://prng.di.unimi.it/xoroshiro1024star.c)
   - (link)&nbsp;[xoroshiro1024starstar.c](https://prng.di.unimi.it/xoroshiro1024starstar.c)
