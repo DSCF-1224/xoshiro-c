@@ -71,7 +71,7 @@ int fprintf_state_size ( FILE *const file_ptr )
 int set_generator_state ( int const *const argc , const char *const argv[] , size_t *const state )
 {
 	// STEP.01
-	// check the number of given line command arguments
+	// check the number of given command line arguments
 	if ( *argc < ( 2 + state_size() ) )
 	{
 		fprintf( stderr , "%s %ld%s\n" , "The number of command line arguments must be greater than" , ( 2 + state_size() ) , "." );
@@ -90,7 +90,7 @@ int set_generator_state ( int const *const argc , const char *const argv[] , siz
 	// check the given state
 	if ( !validate_state( s ) )
 	{
-		fprintf( stderr , "%s\n"       , "At least one state must have a non-zero value." );
+		fprintf( stderr , "%s\n" , "At least one state must have a non-zero value." );
 		fprintf_state_size( stderr );
 		return EXIT_FAILURE + 3;
 	}
@@ -107,7 +107,7 @@ void fprintf_sample_unit ( FILE* fstream_save , const size_t *const sample_size 
 	{
 		// STEP.01
 		// print the current number of samples
-		fprintf( fstream_save , " %20ld" , itr_smpl );
+		fprintf( fstream_save , "%20ld" , itr_smpl );
 
 		// STEP.02
 		// print the current states of the generator
