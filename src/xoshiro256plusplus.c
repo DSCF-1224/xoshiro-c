@@ -24,43 +24,45 @@ void fill_state ( struct Xoshiro256plusplus *const generator , const uint64_t sr
 void jump_state ( struct Xoshiro256plusplus *const generator , const bool is_long_jump )
 {
 	/* local variable */
-	static struct Xoshiro256plusplus workspace;
-	const  static uint64_t           JUMP      [] = { 0x180ec6d33cfd0aba, 0xd5a61266f0c9392c, 0xa9582618e03fc9aa, 0x39abdc4529b1661c };
-	const  static uint64_t           LONG_JUMP [] = { 0x76e15d3efefdcbbf, 0xc5004e441c522fb3, 0x77710069854ee241, 0x39109bb02acbe635 };
+	const static uint64_t JUMP      [] = { 0x180ec6d33cfd0aba, 0xd5a61266f0c9392c, 0xa9582618e03fc9aa, 0x39abdc4529b1661c };
+	const static uint64_t LONG_JUMP [] = { 0x76e15d3efefdcbbf, 0xc5004e441c522fb3, 0x77710069854ee241, 0x39109bb02acbe635 };
 
 	// STEP.01
-	fill_state( &workspace , 0 );
-
-	// STEP.02
-	if   (is_long_jump) jump_state_core( generator , &workspace , LONG_JUMP , state_size(generator) );
-	else                jump_state_core( generator , &workspace , JUMP      , state_size(generator) );
-
-	// STEP.03
-	copy_state( generator , &workspace );
+	if   (is_long_jump) jump_state_core( generator , LONG_JUMP , state_size(generator) );
+	else                jump_state_core( generator , JUMP      , state_size(generator) );
 
 	// STEP.END
 	return;
 }
 
 
-void jump_state_core ( struct Xoshiro256plusplus *const generator , struct Xoshiro256plusplus *const workspace , const uint64_t *const JUMP , const size_t given_size_state )
+void jump_state_core ( struct Xoshiro256plusplus *const generator , const uint64_t *const JUMP , const size_t given_size_state )
 {
+	/* local variable */
+	static struct Xoshiro256plusplus workspace;
+
 	// STEP.01
-	for (int i = 0 ; i < given_size_state ; ++i)
-	for (int b = 0 ; b < 64               ; ++b)
+	fill_state( &workspace , 0 );
+
+	// STEP.02
+	for (int i = 0 ; i < given_size_state ; i++)
+	for (int b = 0 ; b < 64               ; b++)
 	{
 		// STEP.01
 		if ( JUMP[i] & UINT64_C(1) << b )
 		{
 			for (int j = 0; j < given_size_state; ++j)
 			{
-				(*workspace).state[j] ^= (*generator).state[j];
+				workspace.state[j] ^= (*generator).state[j];
 			}
 		}
 
 		// STEP.02
 		update_state(generator);
 	}
+
+	// STEP.02
+	copy_state( generator , &workspace );
 
 	// STEP.END
 	return;

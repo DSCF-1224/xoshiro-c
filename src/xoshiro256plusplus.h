@@ -20,7 +20,7 @@ struct Xoshiro256plusplus
 void     copy_state      (       struct Xoshiro256plusplus *const dst       , const struct Xoshiro256plusplus *const src );
 void     fill_state      (       struct Xoshiro256plusplus *const generator , const uint64_t src );
 void     jump_state      (       struct Xoshiro256plusplus *const generator , const bool is_long_jump );
-void     jump_state_core (       struct Xoshiro256plusplus *const generator , struct Xoshiro256plusplus *const workspace , const uint64_t *const JUMP , const size_t given_size_state );
+void     jump_state_core (       struct Xoshiro256plusplus *const generator , const uint64_t *const JUMP , const size_t given_size_state );
 uint64_t sample_uint64   (       struct Xoshiro256plusplus *const generator );
 size_t   state_size      ( const struct Xoshiro256plusplus *const generator );
 void     update_state    (       struct Xoshiro256plusplus *const generator );
