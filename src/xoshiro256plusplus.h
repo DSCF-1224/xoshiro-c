@@ -6,6 +6,7 @@
 #include <stdint.h>
 #include <string.h>
 #include "rotl.h"
+#include "xoshiro256.h"
 
 
 /* stuct */

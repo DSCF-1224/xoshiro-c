@@ -23,13 +23,9 @@ void fill_state ( struct Xoshiro256plusplus *const generator , const uint64_t sr
 
 void jump_state ( struct Xoshiro256plusplus *const generator , const bool is_long_jump )
 {
-	/* local variable */
-	const static uint64_t JUMP      [] = { 0x180ec6d33cfd0aba, 0xd5a61266f0c9392c, 0xa9582618e03fc9aa, 0x39abdc4529b1661c };
-	const static uint64_t LONG_JUMP [] = { 0x76e15d3efefdcbbf, 0xc5004e441c522fb3, 0x77710069854ee241, 0x39109bb02acbe635 };
-
 	// STEP.01
-	if   (is_long_jump) jump_state_core( generator , LONG_JUMP , state_size(generator) );
-	else                jump_state_core( generator , JUMP      , state_size(generator) );
+	if   (is_long_jump) jump_state_core( generator , XOSHIRO_0256_JUMP_LONG , state_size(generator) );
+	else                jump_state_core( generator , XOSHIRO_0256_JUMP      , state_size(generator) );
 
 	// STEP.END
 	return;
