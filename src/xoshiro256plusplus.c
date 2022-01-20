@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "xoshiro256plusplus.h"
 
 
@@ -16,7 +17,13 @@ void copy_state ( struct Xoshiro256plusplus *const dst , const struct Xoshiro256
 
 void fill_state ( struct Xoshiro256plusplus *const generator , const uint64_t src )
 {
-	memset( &(*generator).state[0] , src , state_size(generator) );
+	// STEP.01
+	for (size_t itr_stat = 0; itr_stat < state_size(generator); ++itr_stat)
+	{
+		(*generator).state[itr_stat] = src;
+	}
+
+	// STEP.END
 	return;
 }
 
@@ -35,14 +42,14 @@ void jump_state ( struct Xoshiro256plusplus *const generator , const bool is_lon
 void jump_state_core ( struct Xoshiro256plusplus *const generator , const uint64_t *const JUMP , const size_t given_size_state )
 {
 	/* local variable */
-	static struct Xoshiro256plusplus workspace;
+	struct Xoshiro256plusplus workspace;
 
 	// STEP.01
 	fill_state( &workspace , 0 );
 
 	// STEP.02
-	for (int i = 0 ; i < given_size_state ; i++)
-	for (int b = 0 ; b < 64               ; b++)
+	for (int i = 0 ; i < given_size_state ; ++i)
+	for (int b = 0 ; b < 64               ; ++b)
 	{
 		// STEP.01
 		if ( JUMP[i] & UINT64_C(1) << b )
@@ -57,7 +64,7 @@ void jump_state_core ( struct Xoshiro256plusplus *const generator , const uint64
 		update_state(generator);
 	}
 
-	// STEP.02
+	// STEP.03
 	copy_state( generator , &workspace );
 
 	// STEP.END
