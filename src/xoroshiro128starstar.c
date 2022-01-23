@@ -24,7 +24,7 @@ void jump_state_core ( struct Xoroshiro128starstar *const generator , const uint
 	/* local variable */
 	struct Xoroshiro128starstar workspace;
 
-	#include "include/jump_state_core.c"
+	#include "include/jump_state/core0128.c"
 }
 
 
