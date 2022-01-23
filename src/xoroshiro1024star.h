@@ -9,7 +9,7 @@
 #include "xoroshiro1024.h"
 
 
-/* stuct */
+/* struct */
 struct Xoroshiro1024star_Address
 {
 	/* data */

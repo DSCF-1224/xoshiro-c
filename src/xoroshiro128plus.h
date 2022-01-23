@@ -9,7 +9,7 @@
 #include "xoroshiro128.h"
 
 
-/* stuct */
+/* struct */
 struct Xoroshiro128plus
 {
 	/* data */

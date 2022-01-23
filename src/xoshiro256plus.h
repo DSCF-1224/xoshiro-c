@@ -1,5 +1,5 @@
-#ifndef XORSHIRO_0256_PLUS_H
-#define XORSHIRO_0256_PLUS_H
+#ifndef XOSHIRO_0256_PLUS_H
+#define XOSHIRO_0256_PLUS_H
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -9,7 +9,7 @@
 #include "xoshiro256.h"
 
 
-/* stuct */
+/* struct */
 struct Xoshiro256plus
 {
 	/* data */
@@ -27,6 +27,6 @@ size_t   state_size      ( const struct Xoshiro256plus *const generator );
 void     update_state    (       struct Xoshiro256plus *const generator );
 bool     validate_state  ( const struct Xoshiro256plus *const generator );
 
-#endif /* XORSHIRO_0256_PLUS_H */
+#endif /* XOSHIRO_0256_PLUS_H */
 
 /* EOF */
