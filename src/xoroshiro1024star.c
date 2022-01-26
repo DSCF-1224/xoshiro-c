@@ -3,41 +3,39 @@
 
 void copy_state ( struct Xoroshiro1024star *const dst , const struct Xoroshiro1024star *const src )
 {
-	#include "include/copy_state.c"
+	copy_state_value_xoroshiro1024( &(*dst).state , &(*src).state );
+	return;
 }
 
 
 void fill_state ( struct Xoroshiro1024star *const generator , const uint64_t src )
 {
-	#include "include/fill_state.c"
+	fill_state_value_xoroshiro1024( &(*generator).state , src );
+	return;
 }
 
 
-void initialize_generator ( struct Xoroshiro1024star *const generator )
+void initialize_generator ( struct Xoroshiro1024star *const generator , const int address )
 {
-	(*generator).address.fst = 0;
+	initialize_address_xoroshiro1024( &(*generator).address , address );
 	return;
 }
 
 
 void jump_state ( struct Xoroshiro1024star *const generator , const bool is_long_jump )
 {
-	#include "include/jump_state/xoroshiro1024.c"
-}
+	// STEP.01
+	if   (is_long_jump) jump_state_core_xoroshiro1024( &(*generator).address , &(*generator).state , &(*generator).workspace , XOROSHIRO_1024_JUMP_LONG );
+	else                jump_state_core_xoroshiro1024( &(*generator).address , &(*generator).state , &(*generator).workspace , XOROSHIRO_1024_JUMP      );
 
-
-void jump_state_core ( struct Xoroshiro1024star *const generator , const uint64_t *const JUMP , const size_t given_size_state )
-{
-	/* local variable */
-	uint64_t workspace[given_size_state];
-
-	#include "include/jump_state/core1024.c"
+	// STEP.END
+	return;
 }
 
 
 size_t state_size ( const struct Xoroshiro1024star *const generator )
 {
-	#include "include/state_size.c"
+	return state_size_xoroshiro1024( &(*generator).state );
 }
 
 
@@ -67,19 +65,21 @@ void update_state ( struct Xoroshiro1024star *const generator )
 
 void update_state_pre ( struct Xoroshiro1024star *const generator )
 {
-	#include "include/update_state/xoroshiro1024/pre.c"
+	update_state_pre_xoroshiro1024( &(*generator).address , &(*generator).state , &(*generator).workspace );
+	return;
 }
 
 
 void update_state_pst ( struct Xoroshiro1024star *const generator )
 {
-	#include "include/update_state/xoroshiro1024/pst.c"
+	update_state_pst_xoroshiro1024( &(*generator).address , &(*generator).state , &(*generator).workspace );
+	return;
 }
 
 
 bool validate_state ( const struct Xoroshiro1024star *const generator )
 {
-	#include "include/validate_state.c"
+	return validate_state_xoroshiro1024( &(*generator).state );
 }
 
 /* EOF */

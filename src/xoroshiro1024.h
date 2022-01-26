@@ -1,7 +1,13 @@
 #ifndef XOROSHIRO_1024_H
 #define XOROSHIRO_1024_H
 
+#include <stdbool.h>
+#include <stddef.h>
 #include <stdint.h>
+#include <string.h>
+#include "rotl.h"
+
+#define STATE_SIZE_XOROSHIRO_1024 16
 
 const static uint64_t XOROSHIRO_1024_JUMP [] =
 	{
@@ -44,8 +50,40 @@ const static uint64_t XOROSHIRO_1024_JUMP_LONG [] =
 	};
 
 
+/* struct */
+struct Xoroshiro1024_Address
+{
+	/* data */
+	int fst;
+	int lst;
+};
+
+
+struct Xoroshiro1024_State
+{
+	/* data */
+	uint64_t value[STATE_SIZE_XOROSHIRO_1024];
+};
+
+
+struct Xoroshiro1024_Workspace
+{
+	/* data */
+	uint64_t fst;
+	uint64_t lst;
+};
+
+
 /* function prototype */
-int modify_state_address ( const int *const address_fst , const int *const iterator );
+int    modify_state_address             ( const struct Xoroshiro1024_Address *const address , const int iterator );
+void   copy_state_value_xoroshiro1024   ( struct Xoroshiro1024_State *const dst , const struct Xoroshiro1024_State *const src );
+void   fill_state_value_xoroshiro1024   ( struct Xoroshiro1024_State *const generator , const uint64_t src );
+void   initialize_address_xoroshiro1024 ( struct Xoroshiro1024_Address *const instance , const int address );
+void   jump_state_core_xoroshiro1024    ( struct Xoroshiro1024_Address *const address , struct Xoroshiro1024_State *const state , struct Xoroshiro1024_Workspace *const workspace , const uint64_t *const JUMP );
+size_t state_size_xoroshiro1024         ( const struct Xoroshiro1024_State *const state );
+void   update_state_pre_xoroshiro1024   ( struct Xoroshiro1024_Address *const address , struct Xoroshiro1024_State *const state , struct Xoroshiro1024_Workspace *const workspace );
+void   update_state_pst_xoroshiro1024   ( struct Xoroshiro1024_Address *const address , struct Xoroshiro1024_State *const state , struct Xoroshiro1024_Workspace *const workspace );
+bool   validate_state_xoroshiro1024     ( const struct Xoroshiro1024_State *const state );
 
 #endif /* XOROSHIRO_1024_H */
 
