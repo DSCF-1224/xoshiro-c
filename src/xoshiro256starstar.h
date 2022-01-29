@@ -6,6 +6,7 @@
 #include <stdint.h>
 #include <string.h>
 #include "rotl.h"
+#include "xoshiro.h"
 #include "xoshiro256.h"
 
 
@@ -18,10 +19,9 @@ struct Xoshiro256starstar
 
 
 /* function prototype */
-void     copy_state      (       struct Xoshiro256starstar *const dst       , const struct Xoshiro256starstar *const src );
+void     copy_state      (       struct Xoshiro256starstar *const dest      , const struct Xoshiro256starstar *const src );
 void     fill_state      (       struct Xoshiro256starstar *const generator , const uint64_t src );
 void     jump_state      (       struct Xoshiro256starstar *const generator , const bool is_long_jump );
-void     jump_state_core (       struct Xoshiro256starstar *const generator , const uint64_t *const JUMP , const size_t given_size_state );
 uint64_t sample_uint64   (       struct Xoshiro256starstar *const generator );
 size_t   state_size      ( const struct Xoshiro256starstar *const generator );
 void     update_state    (       struct Xoshiro256starstar *const generator );

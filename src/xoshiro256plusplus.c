@@ -1,30 +1,28 @@
 #include "xoshiro256plusplus.h"
 
 
-void copy_state ( struct Xoshiro256plusplus *const dst , const struct Xoshiro256plusplus *const src )
+void copy_state ( struct Xoshiro256plusplus *const dest , const struct Xoshiro256plusplus *const src )
 {
-	#include "include/copy_state.c"
+	copy_state_xoshiro( state_size(dest) , (*dest).state , (*src).state );
+	return;
 }
 
 
 void fill_state ( struct Xoshiro256plusplus *const generator , const uint64_t src )
 {
-	#include "include/fill_state.c"
+	fill_state_xoshiro( state_size(generator) , (*generator).state , src );
+	return;
 }
 
 
 void jump_state ( struct Xoshiro256plusplus *const generator , const bool is_long_jump )
 {
-	#include "include/jump_state/xoshiro256.c"
-}
+	// STEP.01
+	if   (is_long_jump) jump_state_core_xoshiro256( state_size(generator) , (*generator).state , XOSHIRO_0256_JUMP_LONG );
+	else                jump_state_core_xoshiro256( state_size(generator) , (*generator).state , XOSHIRO_0256_JUMP      );
 
-
-void jump_state_core ( struct Xoshiro256plusplus *const generator , const uint64_t *const JUMP , const size_t given_size_state )
-{
-	/* local variable */
-	struct Xoshiro256plusplus workspace;
-
-	#include "include/jump_state/core0256.c"
+	// STEP.END
+	return;
 }
 
 
@@ -49,13 +47,14 @@ uint64_t sample_uint64 ( struct Xoshiro256plusplus *const generator )
 
 void update_state ( struct Xoshiro256plusplus *const generator )
 {
-	#include "include/update_state/xoshiro256.c"
+	update_state_xoshiro256( (*generator).state );
+	return;
 }
 
 
 bool validate_state ( const struct Xoshiro256plusplus *const generator )
 {
-	#include "include/validate_state.c"
+	return validate_state_xoshiro( state_size(generator) , (*generator).state );
 }
 
 /* EOF */
